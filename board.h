@@ -11,7 +11,7 @@ pos newPos(int x, int y);
 
 struct board
 {
-    int **board;
+    int *board;
     int height;
     int width;
 };
@@ -19,5 +19,6 @@ struct board
 typedef board board;
 
 board *newBoard();
-void setSquare(board currentBoard, pos currentPos, int v);
-int getSquare(board currentBoard, pos currentPos);
+void setSquare(board *currentBoard, pos currentPos, int v);
+int getSquare(board *currentBoard, pos currentPos);
+void showBoard(board *currentBoard);

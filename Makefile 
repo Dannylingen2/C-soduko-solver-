@@ -1,0 +1,2 @@
+play: 
+        g++ -o test -g play.cpp board.cpp

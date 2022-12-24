@@ -12,33 +12,46 @@ board *newBoard()
     int height = 9;
     int width = 9;
     board *currentBoard = new board;
-    int **x = new int *[width];
-    for (int i = 0; i < width; i++)
-    {
-        x[i] = new int[height];
-        for (int j = 0; j < height; j++)
-        {
-            x[i][j] = 0;
-        }
-    }
+
+    currentBoard->board = new int[width * height];
     currentBoard->width = width;
     currentBoard->height = height;
     return currentBoard;
 }
-void setSquare(board currentBoard, pos currentPos, int v)
+void setSquare(board *currentBoard, pos currentPos, int v)
 {
-    currentBoard.board[currentPos.x][currentPos.y] = v;
+    // [i][j] is then rewritten as [i * sizeY + j] so that we use one chunk of memory
+    if (v > 0 && v < 10)
+    {
+        currentBoard->board[currentPos.y * currentBoard->height + currentPos.x] = v;
+    }
+    else
+    {
+        std::cout << "not a valid number " << v;
+    }
 }
-int getSquare(board currentBoard, pos currentPos)
+int getSquare(board *currentBoard, pos currentPos)
 {
-    return currentBoard.board[currentPos.x][currentPos.y];
+    return currentBoard->board[currentPos.y * currentBoard->height + currentPos.x];
 }
-void showBoard(board currentBoard)
+void showBoard(board *currentBoard)
 {
-}
-int main()
-{
-    board *boardtes = newBoard();
-    std::cout << boardtes->height << "\n";
-    std::cout << "welcome";
+    int height = currentBoard->height;
+    int width = currentBoard->width;
+    std::cout << "|---|---|---| \n";
+    for (int y = 0; y < height; y++)
+    {
+        if (y == 3 || y == 6)
+            std::cout << "|---|---|---| \n";
+
+        std::cout << "|";
+        for (int x = 0; x < width; x++)
+        {
+            if (x == 3 || x == 6)
+                std::cout << "|";
+            std::cout << currentBoard->board[y * height + x];
+        }
+        std::cout << "|\n";
+    }
+    std::cout << "|---|---|---| \n\n\n";
 }
